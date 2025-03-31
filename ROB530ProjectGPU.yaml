@@ -1,0 +1,25 @@
+name: ROB530ProjectGPU
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - tobiasrobotics
+dependencies:
+  - python
+  - numpy
+  - pytorch
+  - torchvision
+  - pytorch-cuda
+  - patchnetvlad
+  - natsort
+  - tqdm
+  - opencv
+  - pillow
+  - scikit-learn
+  - faiss-gpu
+  - matplotlib-base
+  # - tensorflow
+  # - tensorflow-hub
+  - scikit-image
+  - ipywidgets
+  - ipykernel 
