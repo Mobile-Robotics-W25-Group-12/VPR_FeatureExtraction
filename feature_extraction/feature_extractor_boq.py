@@ -75,32 +75,36 @@ class BoQFeatureExtractor(torch.nn.Module):
         )
         self.model = self.model.to(self.device)
 
-    # Update the compute_features method in the BoQFeatureExtractor class to handle tuple outputs
     def compute_features(self, imgs: List[np.ndarray]) -> np.ndarray:
-        img_set = BoQImageDataset(imgs, self.image_size)
-        test_data_loader = DataLoader(
-            dataset=img_set,
-            num_workers=4,
-            batch_size=4,
-            shuffle=False,
-            pin_memory=torch.cuda.is_available(),
+        preprocessed_imgs = []
+        transform = transforms.Compose(
+            [
+                transforms.ToPILImage(),
+                transforms.Resize(
+                    self.image_size, interpolation=transforms.InterpolationMode.BICUBIC
+                ),
+                transforms.ToTensor(),
+                transforms.Normalize(
+                    mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+                ),
+            ]
         )
+
+        for img in imgs:
+            preprocessed_imgs.append(transform(img))
+
+        imgs_torch = torch.stack(preprocessed_imgs, dim=0)
+        imgs_torch = imgs_torch.to(self.device)
 
         self.model.eval()
         with torch.no_grad():
-            global_feats = np.empty((len(img_set), self.dim), dtype=np.float32)
-            for input_data, indices in tqdm(test_data_loader):
-                indices_np = indices.numpy()
-                input_data = input_data.to(self.device)
-                output = self.model(input_data)
+            output = self.model(imgs_torch)
 
-                # Handle the case where output is a tuple
-                if isinstance(output, tuple):
-                    # Assuming the first element contains the features
-                    image_encoding = output[0]
-                else:
-                    image_encoding = output
+            if isinstance(output, tuple):
+                image_encoding = output[0]
+            else:
+                image_encoding = output
 
-                global_feats[indices_np, :] = image_encoding.cpu().numpy()
+            global_feats = image_encoding.cpu().numpy()
 
         return global_feats
