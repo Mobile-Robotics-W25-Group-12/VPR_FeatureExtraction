@@ -1,5 +1,6 @@
 # Ignore datasets
 images/
+data/
 
 # Ignore outputs
 feature_extraction_output/
