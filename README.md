@@ -61,7 +61,7 @@ ROB530ProjectGPU.yaml contains all the necessary packages for the conda environm
 1. Clone this repository:
    ```
    git clone https://github.com/Mobile-Robotics-W25-Group-12/VPR_FeatureExtraction.git
-   cd vpr-toolkit
+   cd VPR_FeatureExtraction
    ```
 
 2. Install required packages:
