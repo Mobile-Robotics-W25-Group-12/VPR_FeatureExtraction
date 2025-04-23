@@ -8,7 +8,6 @@ This repository provides tools for the evaluation of Visual Place Recognition (V
 
 - Extract features from images using descriptor methods of their choosing
 - Evaluate and compare VPR approaches
-- Benchmark state-of-the-art (SOTA) methods such as BoQ.
 
 This repo focuses on comparing a recent BoQ with current techniques such as NetVLAD and CosPlace and extracting features for ORB-SLAM processing.
 
@@ -109,8 +108,8 @@ The toolkit implements the following VPR methods:
 - **SAD**: Sum of Absolute Differences
 - **CosPlace**: Cosine place recognition network
 - **EigenPlaces**: Eigenvalue-based place recognition
-- **BoQ-ResNet50**: Bag-of-Quantized features with ResNet50 backbone
-- **BoQ-DinoV2**: State-of-the-art approach using DinoV2 backbone
+- **BoQ-ResNet50**: Bag-of-Queries features with ResNet50 backbone
+- **BoQ-DinoV2**: Bag-of-Queries features with DinoV2 backbone
 
 ## Citation
 
